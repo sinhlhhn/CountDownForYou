@@ -14,7 +14,7 @@ struct EventsView: View {
     
     var body: some View {
         NavigationStack {
-            List(viewModel.events) { event in
+            List(viewModel.events.sorted()) { event in
                 NavigationLink(value: event, label: {
                     EventRow(model: event)
                         .swipeActions(edge: .trailing) {
@@ -47,7 +47,9 @@ struct EventsView: View {
     
     private func createEventForm(mode: Mode) -> some View {
         EventForm(
-            viewModel: EventViewModel(mode: mode)
+            viewModel: EventViewModel(mode: mode), onSave: { event in
+                viewModel.saveEvent(event)
+            }
         )
     }
 }

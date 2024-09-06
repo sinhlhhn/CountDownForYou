@@ -9,7 +9,14 @@ import SwiftUI
 
 struct EventForm: View {
     @Environment(\.dismiss) var dismiss
-    @StateObject var viewModel: EventViewModel
+    @ObservedObject var viewModel: EventViewModel
+    
+    private var onSave: (EventModel) -> Void
+    
+    init(viewModel: EventViewModel, onSave: @escaping (EventModel) -> Void) {
+        self.onSave = onSave
+        self.viewModel = viewModel
+    }
     
     var body: some View {
         VStack {
@@ -30,9 +37,8 @@ struct EventForm: View {
         }
         .toolbar(content: {
             Button(action: {
-                if viewModel.saveEvent() {
-                    dismiss()
-                }
+                onSave(viewModel.getEventModel())
+                dismiss()
             }, label: {
                 Text("Save")
             })

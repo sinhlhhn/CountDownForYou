@@ -21,4 +21,8 @@ class EventsViewModel: ObservableObject {
         UserDefaultUtil.delete(event)
         events.removeAll { $0 == event }
     }
+    
+    func saveEvent(_ event: EventModel) {
+        _ = UserDefaultUtil.save(event)
+    }
 }

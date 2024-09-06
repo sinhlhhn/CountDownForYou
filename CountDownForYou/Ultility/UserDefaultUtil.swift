@@ -16,13 +16,10 @@ final class UserDefaultUtil {
     }
     
     static func save(_ event: EventModel) -> Bool {
-        guard let data = userDefault.value(forKey: Constants.events) as? Data else {
-            print("List event is empty")
-            return false
-        }
-        guard var currentEvents = try? JSONDecoder().decode([String: EventModel].self, from: data) else {
-            print("Failed to decode")
-            return false
+        var currentEvents = [String: EventModel]()
+        
+        if let data = userDefault.value(forKey: Constants.events) as? Data {
+            currentEvents = (try? JSONDecoder().decode([String: EventModel].self, from: data)) ?? [:]
         }
         
         currentEvents[event.title] = event

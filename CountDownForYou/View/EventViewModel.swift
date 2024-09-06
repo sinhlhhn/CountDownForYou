@@ -36,17 +36,7 @@ class EventViewModel: ObservableObject {
         }
     }
     
-    private func getEventModel() -> EventModel {
+    func getEventModel() -> EventModel {
         EventModel(title: title, date: date, color: color)
-    }
-    
-    func saveEvent() -> Bool {
-        if UserDefaultUtil.save(getEventModel()) {
-            errorMessage = ""
-            return true
-        } else {
-            errorMessage = "Cannot save this event"
-            return false
-        }
     }
 }
